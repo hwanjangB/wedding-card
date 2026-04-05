@@ -65,7 +65,6 @@ export default function Account({ groomName, brideName, groomAccounts, brideAcco
     <section className={`section ${styles.account}`}>
       <p className="section-title">GIFT</p>
       <h2 className="section-heading">마음 전하실 곳</h2>
-      <p className={styles.subtitle}>축하의 마음을 담아 축의금을 전달해 보세요.</p>
       <AccountGroup
         title={`신랑측 (${groomName})`}
         accounts={groomAccounts}
