@@ -24,7 +24,7 @@ export default function Share({ title, description, ogImage: _ogImage }: Props) 
         content: {
           title,
           description,
-          imageUrl: window.location.origin + '/images/sample1.jpg',
+          imageUrl: window.location.origin + import.meta.env.BASE_URL + 'images/main.jpg',
           link: {
             mobileWebUrl: window.location.href,
             webUrl: window.location.href,

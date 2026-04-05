@@ -26,9 +26,14 @@ jobs:
       - name: Inject data.json from secret
         run: echo '${{ secrets.DATA_JSON }}' > src/data.json
       - run: npm run build
+      - name: Move build to subdirectory
+        run: |
+          mkdir -p deploy/wedding/baeleem
+          cp -r dist/* deploy/wedding/baeleem/
+          cp public/CNAME deploy/CNAME
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: deploy
 
   deploy:
     environment:
