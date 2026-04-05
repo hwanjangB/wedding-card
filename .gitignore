@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+src/data.json
 serviceAccountKey.json
 exports/
 
