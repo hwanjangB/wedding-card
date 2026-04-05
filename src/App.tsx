@@ -13,6 +13,10 @@ import Guestbook from './components/Guestbook'
 import Share from './components/Share'
 import Footer from './components/Footer'
 
+// public/ 폴더 이미지 경로에 base URL prefix 추가
+const base = import.meta.env.BASE_URL
+const assetUrl = (path: string) => base + path.replace(/^\//, '')
+
 export default function App() {
   useFadeIn()
 
@@ -52,7 +56,7 @@ export default function App() {
         time={data.wedding.time}
         dayOfWeek={data.wedding.dayOfWeek}
         venue={data.wedding.venue}
-        mainImage={data.mainImage}
+        mainImage={assetUrl(data.mainImage)}
       />
 
       <div className="fade-in">
@@ -78,7 +82,7 @@ export default function App() {
       </div>
 
       <div className="fade-in">
-        <Gallery images={data.gallery} />
+        <Gallery images={data.gallery.map(assetUrl)} />
       </div>
 
       <div className="fade-in">
@@ -94,7 +98,7 @@ export default function App() {
           phone={data.wedding.phone}
           naverPlaceId={data.wedding.naverPlaceId}
           kakaoPlaceId={data.wedding.kakaoPlaceId}
-          mapImage={data.wedding.mapImage}
+          mapImage={data.wedding.mapImage ? assetUrl(data.wedding.mapImage) : undefined}
         />
       </div>
 
