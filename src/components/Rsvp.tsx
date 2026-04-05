@@ -55,7 +55,8 @@ export default function Rsvp() {
           type="text"
           placeholder="성함"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value.slice(0, 20))}
+          maxLength={20}
           className={styles.input}
         />
 
@@ -81,7 +82,7 @@ export default function Rsvp() {
             <div className={styles.counter}>
               <button onClick={() => setCount(Math.max(1, count - 1))} className={styles.countBtn}>−</button>
               <span className={styles.countValue}>{count}</span>
-              <button onClick={() => setCount(count + 1)} className={styles.countBtn}>+</button>
+              <button onClick={() => setCount(Math.min(10, count + 1))} className={styles.countBtn}>+</button>
             </div>
           </div>
         )}

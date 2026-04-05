@@ -68,21 +68,24 @@ export default function Guestbook() {
             type="text"
             placeholder="이름"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value.slice(0, 20))}
+            maxLength={20}
             className={styles.input}
           />
           <input
             type="password"
             placeholder="비밀번호"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.slice(0, 20))}
+            maxLength={20}
             className={styles.input}
           />
         </div>
         <textarea
           placeholder="축하 메시지를 남겨주세요"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value.slice(0, 400))}
+          maxLength={400}
           className={styles.textarea}
           rows={3}
         />
