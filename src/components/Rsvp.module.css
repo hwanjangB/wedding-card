@@ -1,0 +1,143 @@
+.rsvp {
+  background: var(--color-bg-section);
+}
+
+.form {
+  max-width: 320px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  text-align: center;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.statusGroup {
+  display: flex;
+  gap: 8px;
+}
+
+.statusBtn {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  transition: all 0.2s;
+}
+
+.statusBtn:hover {
+  border-color: var(--color-primary-light);
+}
+
+.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.countGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.countLabel {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.countBtn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--color-text);
+  transition: all 0.2s;
+}
+
+.countBtn:hover {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.countValue {
+  font-size: 1.1rem;
+  font-weight: 500;
+  min-width: 24px;
+  text-align: center;
+}
+
+.submitBtn {
+  padding: 14px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.submitBtn:hover {
+  background: var(--color-primary-dark);
+}
+
+.submitBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.success {
+  padding: 40px 0;
+}
+
+.successIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.successText {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.successSub {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-weight: 300;
+}

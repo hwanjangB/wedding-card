@@ -1,0 +1,70 @@
+{
+  "groom": {
+    "name": "",
+    "englishName": "",
+    "phone": "",
+    "father": { "name": "", "phone": "" },
+    "mother": { "name": "", "phone": "" },
+    "fatherTitle": "아버지",
+    "motherTitle": "어머니",
+    "accounts": [
+      { "bank": "", "number": "", "holder": "" }
+    ]
+  },
+  "bride": {
+    "name": "",
+    "englishName": "",
+    "phone": "",
+    "father": { "name": "", "phone": "" },
+    "mother": { "name": "", "phone": "" },
+    "fatherTitle": "아버지",
+    "motherTitle": "어머니",
+    "accounts": [
+      { "bank": "", "number": "", "holder": "" }
+    ]
+  },
+  "wedding": {
+    "date": "2026-01-01",
+    "time": "12:00",
+    "dayOfWeek": "",
+    "venue": "",
+    "hall": "",
+    "address": "",
+    "lat": 0,
+    "lng": 0,
+    "parking": "",
+    "transport": "",
+    "bus": "",
+    "phone": "",
+    "naverPlaceId": "",
+    "kakaoPlaceId": "",
+    "mapImage": ""
+  },
+  "greeting": {
+    "title": "소중한 분들을 초대합니다",
+    "message": "서로 다른 길을 걸어온 두 사람이\n하나의 길을 함께 걸어가려 합니다.\n\n귀한 걸음 하시어\n따뜻한 축복으로 함께해 주시면\n더없는 기쁨이 되겠습니다."
+  },
+  "mainImage": "/images/main.jpg",
+  "gallery": [],
+  "kakaoShare": {
+    "templateId": "",
+    "jsKey": ""
+  },
+  "theme": {
+    "primary": "#b08968",
+    "primaryLight": "#ddb892",
+    "primaryDark": "#7f5539",
+    "bg": "#fefcf9",
+    "bgSection": "#ffffff",
+    "text": "#3d3d3d",
+    "textLight": "#6b6b6b",
+    "border": "#e8e0d8",
+    "accent": "#c9184a",
+    "font": "Gowun Batang"
+  },
+  "meta": {
+    "title": "",
+    "description": "",
+    "ogImage": "/images/main.jpg"
+  }
+}

@@ -1,0 +1,47 @@
+.greeting {
+  background: var(--color-bg);
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--color-text);
+  margin-bottom: 24px;
+}
+
+.divider {
+  color: var(--color-primary-light);
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+
+.message {
+  font-size: 0.95rem;
+  line-height: 2;
+  color: var(--color-text-light);
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.parents {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.parentNames {
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+.relation {
+  color: var(--color-text-light);
+  font-weight: 300;
+}
+
+.childName {
+  color: var(--color-primary-dark);
+  font-weight: 500;
+}

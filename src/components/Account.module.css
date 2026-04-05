@@ -1,0 +1,127 @@
+.account {
+  background: var(--color-bg);
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+
+.group {
+  margin-bottom: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-bg-section);
+}
+
+.toggle {
+  width: 100%;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  font-weight: 400;
+  transition: background 0.2s;
+}
+
+.toggle:hover {
+  background: var(--color-bg);
+}
+
+.arrow {
+  font-size: 0.7rem;
+  color: var(--color-text-light);
+  transition: transform 0.3s;
+}
+
+.arrowUp {
+  transform: rotate(180deg);
+}
+
+.accounts {
+  padding: 0 20px 20px;
+}
+
+.accountItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accountItem:last-of-type {
+  border-bottom: none;
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.bank {
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
+.number {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.holder {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+}
+
+.copyBtn {
+  padding: 6px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.copyBtn:hover {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.payLinks {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.payBtn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  background: #fee500;
+  color: #3c1e1e;
+  font-weight: 400;
+  transition: opacity 0.2s;
+}
+
+.payBtn:nth-child(2) {
+  background: #0064ff;
+  color: #fff;
+}
+
+.payBtn:hover {
+  opacity: 0.85;
+}
