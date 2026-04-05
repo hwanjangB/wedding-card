@@ -25,6 +25,8 @@ jobs:
       - run: npm ci
       - name: Inject data.json from secret
         run: echo '${{ secrets.DATA_JSON }}' > src/data.json
+      - name: Inject .env from secret
+        run: echo '${{ secrets.DOTENV }}' > .env
       - run: npm run build
       - name: Move build to subdirectory
         run: |
