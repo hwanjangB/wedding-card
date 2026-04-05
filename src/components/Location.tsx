@@ -16,7 +16,8 @@ interface Props {
   mapImage?: string
 }
 
-export default function Location({ venue, hall, address, lat, lng, parking, transport, bus, phone, naverPlaceId, kakaoPlaceId, mapImage }: Props) {
+export default function Location({ venue, hall, address, lat, lng, parking, transport: _transport, bus, phone, naverPlaceId, kakaoPlaceId, mapImage }: Props) {
+  void _transport
   const mapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

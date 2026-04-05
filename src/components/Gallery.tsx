@@ -2,8 +2,11 @@ import { useState, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Navigation } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
+// @ts-expect-error swiper css imports
 import 'swiper/css'
+// @ts-expect-error swiper css imports
 import 'swiper/css/pagination'
+// @ts-expect-error swiper css imports
 import 'swiper/css/navigation'
 import styles from './Gallery.module.css'
 
@@ -13,7 +16,7 @@ interface Props {
 
 export default function Gallery({ images }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [, setCurrentSlide] = useState(0)
   const lightboxSwiperRef = useRef<SwiperType | null>(null)
 
   return (
