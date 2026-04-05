@@ -112,7 +112,7 @@ export default function Location({ venue, hall, address, lat, lng, parking, tran
               <p>지선: 4318 / 4319</p>
               <p>광역: 9407 / 9507 / 9607 / 6900</p>
               <p style={{ marginTop: '4px', fontSize: '0.8rem', color: 'var(--color-text-light)' }}>
-                세마을운동중앙회(총회회관, 휘문고 입구방면) 하차 도보 3분<br />
+                새마을운동중앙회(총회회관, 휘문고 입구방면) 하차 도보 3분<br />
                 휘문고교사거리(대치동 은마아파트 방면) 하차 건너편 도보 3분
               </p>
             </div>
