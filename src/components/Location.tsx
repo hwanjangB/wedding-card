@@ -50,8 +50,8 @@ export default function Location({ venue, hall, address, lat, lng, parking, tran
   const naverMapUrl = naverPlaceId
     ? `https://map.naver.com/p/entry/place/${naverPlaceId}`
     : `https://map.naver.com/v5/directions/-/${lng},${lat},${encodeURIComponent(venue)}/-/car`
-  // 티맵: WGS84 좌표 기반 navigate (모바일 앱에서만 동작)
-  const tmapUrl = `tmap://navigate?goalLat=${lat}&goalLon=${lng}&goalName=${encodeURIComponent(venue)}`
+  // 티맵: tmap://route (goalx=경도, goaly=위도, goalname=이름)
+  const tmapUrl = `tmap://route?goalx=${lng}&goaly=${lat}&goalname=${encodeURIComponent(venue)}`
 
   const handleTmap = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
