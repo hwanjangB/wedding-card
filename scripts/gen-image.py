@@ -9,7 +9,7 @@ import base64
 from google import genai
 from google.genai import types
 
-client = genai.Client(api_key="REDACTED")
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY", ""))
 
 def generate(prompt: str, output_path: str, reference_image: str = None):
     contents = []
