@@ -104,6 +104,16 @@ export default function Location({ venue, hall, address, lat, lng, parking, tran
             <p style={{ marginTop: '4px' }}><span className={styles.line3}>3호선</span> 학여울역 1번 출구 정면 방향 940m 도보 우측 건물</p>
           </div>
         </div>
+        <div className={styles.transportItem}>
+          <span className={styles.transportLabel}>셔틀</span>
+          <div>
+            <p><span className={styles.line2}>2호선</span> 삼성역 3번 출구</p>
+            <p style={{ marginTop: '4px' }}><span className={styles.line3}>3호선</span> 학여울역 1번 출구</p>
+            <p style={{ marginTop: '4px', fontSize: '0.8rem', color: 'var(--color-text-light)' }}>
+              10~15분 간격 운행
+            </p>
+          </div>
+        </div>
         {bus && (
           <div className={styles.transportItem}>
             <span className={styles.transportLabel}>버스</span>

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, Navigation } from 'swiper/modules'
+import { Pagination, Navigation, Zoom } from 'swiper/modules'
 import type { Swiper as SwiperType } from 'swiper'
 // @ts-expect-error swiper css imports
 import 'swiper/css'
@@ -58,8 +58,9 @@ export default function Gallery({ images }: Props) {
         <div className={styles.lightbox}>
           <button className={styles.close} onClick={() => setSelected(null)}>×</button>
           <Swiper
-            modules={[Navigation]}
+            modules={[Navigation, Zoom]}
             navigation
+            zoom={{ maxRatio: 3 }}
             initialSlide={selected}
             spaceBetween={0}
             slidesPerView={1}
@@ -69,7 +70,7 @@ export default function Gallery({ images }: Props) {
           >
             {images.map((img, i) => (
               <SwiperSlide key={i}>
-                <div className={styles.lightboxSlide}>
+                <div className="swiper-zoom-container">
                   <img src={img} alt={`갤러리 ${i + 1}`} />
                 </div>
               </SwiperSlide>
