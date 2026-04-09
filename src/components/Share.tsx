@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { copyToClipboard } from '../lib/kakaoInApp'
 import styles from './Share.module.css'
 
 interface Props {
@@ -10,11 +11,12 @@ interface Props {
 export default function Share({ title, description, ogImage: _ogImage }: Props) {
   const [copied, setCopied] = useState(false)
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
+  const handleCopyLink = async () => {
+    const ok = await copyToClipboard(window.location.href)
+    if (ok) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    })
+    }
   }
 
   const handleKakaoShare = () => {

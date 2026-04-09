@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { isKakaoInApp } from '../lib/kakaoInApp'
 import styles from './Location.module.css'
 
 interface Props {
@@ -43,10 +44,11 @@ export default function Location({ venue, hall, address, lat, lng, parking, tran
     }
   }, [lat, lng])
 
-  // Place ID가 있으면 장소 페이지로, 없으면 좌표 기반 길찾기
+  // 카카오맵: place.map.kakao.com은 Safari ITP로 외부 링크에서 데이터 로드 실패하므로
+  // map.kakao.com/link/ 형식 사용
   const kakaoMapUrl = kakaoPlaceId
-    ? `https://place.map.kakao.com/${kakaoPlaceId}`
-    : `https://map.kakao.com/link/to/${encodeURIComponent(venue)},${lat},${lng}`
+    ? `https://map.kakao.com/link/map/${kakaoPlaceId}`
+    : `https://map.kakao.com/link/map/${encodeURIComponent(venue)},${lat},${lng}`
   const naverMapUrl = naverPlaceId
     ? `https://map.naver.com/p/entry/place/${naverPlaceId}`
     : `https://map.naver.com/v5/directions/-/${lng},${lat},${encodeURIComponent(venue)}/-/car`
@@ -55,10 +57,17 @@ export default function Location({ venue, hall, address, lat, lng, parking, tran
 
   const handleTmap = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-    if (isMobile) {
-      window.location.href = tmapUrl
-    } else {
+    if (!isMobile) {
       alert('티맵 내비게이션은 모바일에서 이용해주세요.')
+      return
+    }
+    if (isKakaoInApp()) {
+      // 카카오톡 인앱브라우저: tmap:// scheme이 차단되므로 외부 브라우저로 우회
+      window.location.href =
+        'kakaotalk://web/openExternal?url=' +
+        encodeURIComponent(tmapUrl)
+    } else {
+      window.location.href = tmapUrl
     }
   }
 
@@ -76,11 +85,35 @@ export default function Location({ venue, hall, address, lat, lng, parking, tran
       <div ref={mapRef} className={styles.map} />
 
       <div className={styles.navButtons}>
-        <a href={naverMapUrl} target="_blank" rel="noopener noreferrer" className={styles.navBtn}>
+        <a
+          href={naverMapUrl}
+          className={styles.navBtn}
+          onClick={(e) => {
+            e.preventDefault()
+            if (isKakaoInApp()) {
+              window.location.href =
+                'kakaotalk://web/openExternal?url=' + encodeURIComponent(naverMapUrl)
+            } else {
+              window.location.href = naverMapUrl
+            }
+          }}
+        >
           <span className={styles.navIcon}>🗺</span>
           네이버지도
         </a>
-        <a href={kakaoMapUrl} target="_blank" rel="noopener noreferrer" className={styles.navBtn}>
+        <a
+          href={kakaoMapUrl}
+          className={styles.navBtn}
+          onClick={(e) => {
+            e.preventDefault()
+            if (isKakaoInApp()) {
+              window.location.href =
+                'kakaotalk://web/openExternal?url=' + encodeURIComponent(kakaoMapUrl)
+            } else {
+              window.location.href = kakaoMapUrl
+            }
+          }}
+        >
           <span className={styles.navIcon}>🗺</span>
           카카오맵
         </a>

@@ -1,3 +1,4 @@
+import { isKakaoInApp } from '../lib/kakaoInApp'
 import styles from './Calendar.module.css'
 
 interface Props {
@@ -43,7 +44,6 @@ export default function Calendar({ date, time, dayOfWeek, venue, hall, address, 
 
   const eventTitle = `💒 ${groomName} ♥ ${brideName} 결혼식`
   const eventLocation = `${venue}${hall ? ' ' + hall : ''} (${address})`
-  const eventDesc = `신랑: ${groomName}\\n신부: ${brideName}\\n\\n장소: ${venue}\\n주소: ${address}`
 
   // Google 캘린더: 2시간 이벤트
   const dtStartG = `${date.replace(/-/g, '')}T${time.replace(':', '')}00`
@@ -51,51 +51,22 @@ export default function Calendar({ date, time, dayOfWeek, venue, hall, address, 
   const dtEndG = `${date.replace(/-/g, '')}T${endHour}${time.split(':')[1]}00`
   const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${dtStartG}/${dtEndG}&location=${encodeURIComponent(eventLocation)}&details=${encodeURIComponent(`신랑: ${groomName}\n신부: ${brideName}\n\n장소: ${venue}\n주소: ${address}`)}`
 
+  // 정적 .ics 파일 경로 (빌드 시 vite-plugin-ics가 생성)
+  const icsUrl = import.meta.env.BASE_URL + 'wedding.ics'
+
   const handleAppleCal = () => {
-    const dtStart = `${date.replace(/-/g, '')}T${time.replace(':', '')}00`
-    const dtEnd = `${date.replace(/-/g, '')}T${endHour}${time.split(':')[1]}00`
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'CALSCALE:GREGORIAN',
-      'VERSION:2.0',
-      `X-WR-CALNAME:${eventTitle}`,
-      'METHOD:PUBLISH',
-      'BEGIN:VTIMEZONE',
-      'TZID:Asia/Seoul',
-      'BEGIN:STANDARD',
-      'TZOFFSETFROM:+1000',
-      'DTSTART:19881009T030000',
-      'TZNAME:GMT+9',
-      'TZOFFSETTO:+0900',
-      'END:STANDARD',
-      'END:VTIMEZONE',
-      'BEGIN:VEVENT',
-      'TRANSP:OPAQUE',
-      `DTSTART;TZID=Asia/Seoul:${dtStart}`,
-      `DTEND;TZID=Asia/Seoul:${dtEnd}`,
-      `SUMMARY:${eventTitle}`,
-      `LOCATION:${eventLocation}`,
-      `DESCRIPTION:${eventDesc}`,
-      'BEGIN:VALARM',
-      'TRIGGER:-PT1H',
-      'DESCRIPTION:미리 알림',
-      'ACTION:DISPLAY',
-      'END:VALARM',
-      'BEGIN:VALARM',
-      'TRIGGER:-P1D',
-      'DESCRIPTION:미리 알림',
-      'ACTION:DISPLAY',
-      'END:VALARM',
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ].join('\r\n')
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `💒 ${groomName} ♥ ${brideName} 결혼식.ics`
-    a.click()
-    URL.revokeObjectURL(url)
+    if (isKakaoInApp()) {
+      // 카카오톡 인앱브라우저: 외부 브라우저로 .ics 파일 열기
+      window.location.href =
+        'kakaotalk://web/openExternal?url=' +
+        encodeURIComponent(window.location.origin + icsUrl)
+    } else {
+      // 일반 브라우저: 직접 다운로드
+      const a = document.createElement('a')
+      a.href = icsUrl
+      a.download = `💒 ${groomName} ♥ ${brideName} 결혼식.ics`
+      a.click()
+    }
   }
 
   return (
@@ -135,7 +106,19 @@ export default function Calendar({ date, time, dayOfWeek, venue, hall, address, 
         <button onClick={handleAppleCal} className={styles.addBtn}>
           일정 저장 <span className={styles.icsLabel}>(.ics)</span>
         </button>
-        <a href={googleCalUrl} target="_blank" rel="noopener noreferrer" className={styles.addBtn}>
+        <a
+          href={googleCalUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.addBtn}
+          onClick={(e) => {
+            if (isKakaoInApp()) {
+              e.preventDefault()
+              window.location.href =
+                'kakaotalk://web/openExternal?url=' + encodeURIComponent(googleCalUrl)
+            }
+          }}
+        >
           구글 캘린더
         </a>
       </div>

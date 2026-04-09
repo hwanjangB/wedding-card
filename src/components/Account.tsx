@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { copyToClipboard } from '../lib/kakaoInApp'
 import styles from './Account.module.css'
 
 interface AccountInfo {
@@ -24,11 +25,12 @@ function AccountGroup({
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState<number | null>(null)
 
-  const handleCopy = (text: string, idx: number) => {
-    navigator.clipboard.writeText(text).then(() => {
+  const handleCopy = async (text: string, idx: number) => {
+    const ok = await copyToClipboard(text)
+    if (ok) {
       setCopied(idx)
       setTimeout(() => setCopied(null), 2000)
-    })
+    }
   }
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import data from './data.json'
 import useFadeIn from './hooks/useFadeIn'
+import InAppBanner from './components/InAppBanner'
 import Hero from './components/Hero'
 import Greeting from './components/Greeting'
 import Calendar from './components/Calendar'
@@ -49,6 +50,7 @@ export default function App() {
 
   return (
     <>
+      <InAppBanner />
       <Hero
         groomName={data.groom.name}
         brideName={data.bride.name}
