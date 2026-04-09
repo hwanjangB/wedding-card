@@ -54,12 +54,20 @@ export default function Calendar({ date, time, dayOfWeek, venue, hall, address, 
   // 정적 .ics 파일 경로 (빌드 시 vite-plugin-ics가 생성)
   const icsUrl = import.meta.env.BASE_URL + 'wedding.ics'
 
-  const handleAppleCal = () => {
+  const handleAppleCal = async () => {
     if (isKakaoInApp()) {
-      // 카카오톡 인앱브라우저: 외부 브라우저로 .ics 파일 열기
-      window.location.href =
-        'kakaotalk://web/openExternal?url=' +
-        encodeURIComponent(window.location.origin + icsUrl)
+      // 카카오톡 인앱브라우저: .ics 파일을 fetch 후 data URI로 열기 시도
+      try {
+        const res = await fetch(icsUrl)
+        const text = await res.text()
+        window.location.href =
+          'data:text/calendar;charset=utf-8,' + encodeURIComponent(text)
+      } catch {
+        // data URI 실패 시 외부 브라우저로 우회
+        window.location.href =
+          'kakaotalk://web/openExternal?url=' +
+          encodeURIComponent(window.location.origin + icsUrl)
+      }
     } else {
       // 일반 브라우저: 직접 다운로드
       const a = document.createElement('a')
