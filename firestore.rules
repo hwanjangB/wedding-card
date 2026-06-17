@@ -1,0 +1,39 @@
+rules_version = '2';
+
+// 모바일 청첩장 Firestore 보안 규칙
+// - guestbook(방명록): 누구나 작성(create) + 열람(read), 수정/삭제 불가
+// - rsvp(참석의사): 누구나 작성(create)만, 열람/수정/삭제 불가 (관리자는 Admin SDK로 우회)
+// - 그 외 모든 경로: 기본 거부(default deny)
+// 모든 create 는 필드 화이트리스트 + 타입/길이 검증으로 스팸·오염을 차단한다.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidGuestbook(d) {
+      return d.keys().hasOnly(['name', 'text', 'createdAt'])
+        && d.name is string && d.name.size() >= 1 && d.name.size() <= 20
+        && d.text is string && d.text.size() >= 1 && d.text.size() <= 400
+        && d.createdAt is timestamp;
+    }
+
+    function isValidRsvp(d) {
+      return d.keys().hasOnly(['name', 'status', 'count', 'createdAt'])
+        && d.name is string && d.name.size() >= 1 && d.name.size() <= 20
+        && d.status in ['attending', 'not_attending', 'undecided']
+        && d.count is int && d.count >= 0 && d.count <= 10
+        && d.createdAt is timestamp;
+    }
+
+    match /guestbook/{docId} {
+      allow read: if true;
+      allow create: if isValidGuestbook(request.resource.data);
+      allow update, delete: if false;
+    }
+
+    match /rsvp/{docId} {
+      allow read: if false;
+      allow create: if isValidRsvp(request.resource.data);
+      allow update, delete: if false;
+    }
+  }
+}

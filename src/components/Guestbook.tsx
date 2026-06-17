@@ -12,7 +12,6 @@ interface Message {
 
 export default function Guestbook() {
   const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
   const [text, setText] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
@@ -36,18 +35,16 @@ export default function Guestbook() {
   }, [])
 
   const handleSubmit = async () => {
-    if (!name.trim() || !text.trim() || !password.trim()) return
+    if (!name.trim() || !text.trim()) return
     setLoading(true)
 
     try {
       await addDoc(collection(db, 'guestbook'), {
         name: name.trim(),
         text: text.trim(),
-        password: password.trim(),
         createdAt: Timestamp.now(),
       })
       setName('')
-      setPassword('')
       setText('')
     } catch (err) {
       console.error('방명록 저장 실패:', err)
@@ -72,14 +69,6 @@ export default function Guestbook() {
             maxLength={20}
             className={styles.input}
           />
-          <input
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            onChange={(e) => setPassword(e.target.value.slice(0, 20))}
-            maxLength={20}
-            className={styles.input}
-          />
         </div>
         <textarea
           placeholder="축하 메시지를 남겨주세요"
@@ -92,7 +81,7 @@ export default function Guestbook() {
         <button
           className={styles.submitBtn}
           onClick={handleSubmit}
-          disabled={!name.trim() || !text.trim() || !password.trim() || loading}
+          disabled={!name.trim() || !text.trim() || loading}
         >
           {loading ? '작성 중...' : '등록'}
         </button>
