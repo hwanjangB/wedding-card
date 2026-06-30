@@ -1,45 +1,22 @@
 rules_version = '2';
 
-// 모바일 청첩장 Firestore 보안 규칙
-// - guestbook(방명록): 작성(create)+열람(read), 수정/삭제 불가
-// - rsvp(참석의사): 작성(create)만, 열람/수정/삭제 불가 (관리자는 Admin SDK로 우회)
-// - 그 외 모든 경로: 기본 거부(default deny)
-// 모든 create 는 필드 화이트리스트 + 타입/길이 검증으로 스팸·오염을 차단한다.
-// 작성(create)은 2026-07-21 00:00 KST 이후 자동으로 잠김(읽기는 계속 가능).
+// 모바일 청첩장 Firestore 보안 규칙 — 결혼식 종료(2026-06-20) 후 작성 마감 상태
+// - guestbook(방명록): 열람(read)만 가능. 작성/수정/삭제 모두 불가.
+// - rsvp(참석의사): 모든 클라이언트 접근 불가 (관리자는 Admin SDK로 우회).
+// - 그 외 모든 경로: 기본 거부(default deny).
+// 신규 작성을 다시 받으려면 guestbook.create / rsvp.create 규칙을 복구할 것
+// (직전 검증 룰은 git history d63f139 의 firestore.rules 참고).
 
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // 작성 허용 마감: 2026-07-20 까지(KST). 2026-07-21 00:00 KST = 2026-07-20 15:00 UTC 부터 거부.
-    function isOpen() {
-      return request.time < timestamp.date(2026, 7, 20) + duration.value(15, 'h');
-    }
-
-    function isValidGuestbook(d) {
-      return d.keys().hasOnly(['name', 'text', 'createdAt'])
-        && d.name is string && d.name.size() >= 1 && d.name.size() <= 20
-        && d.text is string && d.text.size() >= 1 && d.text.size() <= 400
-        && d.createdAt is timestamp;
-    }
-
-    function isValidRsvp(d) {
-      return d.keys().hasOnly(['name', 'status', 'count', 'createdAt'])
-        && d.name is string && d.name.size() >= 1 && d.name.size() <= 20
-        && d.status in ['attending', 'not_attending', 'undecided']
-        && d.count is int && d.count >= 0 && d.count <= 10
-        && d.createdAt is timestamp;
-    }
-
     match /guestbook/{docId} {
       allow read: if true;
-      allow create: if isOpen() && isValidGuestbook(request.resource.data);
-      allow update, delete: if false;
+      allow create, update, delete: if false;
     }
 
     match /rsvp/{docId} {
-      allow read: if false;
-      allow create: if isOpen() && isValidRsvp(request.resource.data);
-      allow update, delete: if false;
+      allow read, create, update, delete: if false;
     }
   }
 }
