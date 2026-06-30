@@ -111,3 +111,12 @@
   font-weight: 300;
   padding: 20px 0;
 }
+
+.closedNotice {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0 auto 28px;
+  max-width: 360px;
+}

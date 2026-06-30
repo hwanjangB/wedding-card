@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { collection, addDoc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore'
+import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore'
 import { db } from '../lib/firebase'
 import styles from './Guestbook.module.css'
 
@@ -10,11 +10,9 @@ interface Message {
   createdAt: string
 }
 
+// 결혼식 종료(2026-06-20) — 방명록 작성 마감. 남겨주신 메시지는 계속 열람 가능.
 export default function Guestbook() {
-  const [name, setName] = useState('')
-  const [text, setText] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const q = query(collection(db, 'guestbook'), orderBy('createdAt', 'desc'))
@@ -34,63 +32,16 @@ export default function Guestbook() {
     return () => unsubscribe()
   }, [])
 
-  const handleSubmit = async () => {
-    if (!name.trim() || !text.trim()) return
-    setLoading(true)
-
-    try {
-      await addDoc(collection(db, 'guestbook'), {
-        name: name.trim(),
-        text: text.trim(),
-        createdAt: Timestamp.now(),
-      })
-      setName('')
-      setText('')
-    } catch (err) {
-      console.error('방명록 저장 실패:', err)
-      alert('저장에 실패했습니다. 잠시 후 다시 시도해주세요.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
     <section className={`section ${styles.guestbook}`}>
       <p className="section-title">GUESTBOOK</p>
       <h2 className="section-heading">축하 메시지</h2>
 
-      <div className={styles.form}>
-        <div className={styles.formRow}>
-          <input
-            type="text"
-            placeholder="이름"
-            value={name}
-            onChange={(e) => setName(e.target.value.slice(0, 20))}
-            maxLength={20}
-            className={styles.input}
-          />
-        </div>
-        <textarea
-          placeholder="축하 메시지를 남겨주세요"
-          value={text}
-          onChange={(e) => setText(e.target.value.slice(0, 400))}
-          maxLength={400}
-          className={styles.textarea}
-          rows={3}
-        />
-        <button
-          className={styles.submitBtn}
-          onClick={handleSubmit}
-          disabled={!name.trim() || !text.trim() || loading}
-        >
-          {loading ? '작성 중...' : '등록'}
-        </button>
-      </div>
+      <p className={styles.closedNotice}>
+        남겨주신 따뜻한 축하 메시지, 진심으로 감사드립니다 ♥
+      </p>
 
       <div className={styles.messages}>
-        {messages.length === 0 && (
-          <p className={styles.empty}>아직 메시지가 없습니다. 첫 번째 축하 메시지를 남겨주세요!</p>
-        )}
         {messages.map((msg) => (
           <div key={msg.id} className={styles.message}>
             <div className={styles.msgHeader}>
